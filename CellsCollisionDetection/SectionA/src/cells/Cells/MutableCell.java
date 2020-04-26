@@ -1,23 +1,25 @@
-package cells;
+package cells.Cells;
+
+import cells.Cell;
 
 public class MutableCell<T> implements Cell<T> {
 
   private T value;
 
+  public MutableCell(T value) {
+    if (value == null){
+      throw new IllegalArgumentException();
+    }
+    set(value);
+  }
+
   public MutableCell() {
     value = null;
   }
 
-  public MutableCell(T value) {
-    if (value == null) {
-      throw new IllegalArgumentException();
-    }
-    this.value = value;
-  }
-
   @Override
   public void set(T value) {
-    if (value == null) {
+    if (value == null){
       throw new IllegalArgumentException();
     }
     this.value = value;

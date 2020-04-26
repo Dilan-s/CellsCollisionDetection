@@ -1,6 +1,6 @@
-package cells;
+package cells.Cells;
 
-import java.util.Objects;
+import cells.Cell;
 
 public class ImmutableCell<T> implements Cell<T> {
 
@@ -25,7 +25,7 @@ public class ImmutableCell<T> implements Cell<T> {
 
   @Override
   public boolean isSet() {
-    return true;
+    return value != null;
   }
 
   @Override
@@ -36,12 +36,12 @@ public class ImmutableCell<T> implements Cell<T> {
     if (!(o instanceof ImmutableCell)) {
       return false;
     }
-    ImmutableCell<?> that = (ImmutableCell<?>) o;
-    return Objects.equals(value, that.value);
+    ImmutableCell<T> that = (ImmutableCell<T>) o;
+    return value.equals(that.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value);
+    return value.hashCode();
   }
 }
