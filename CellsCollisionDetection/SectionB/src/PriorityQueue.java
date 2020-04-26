@@ -32,8 +32,8 @@ public class PriorityQueue<T extends Comparable<T>> implements
   }
 
   /**
-   * Returns the element with highest priority, or returns null if the priority.
-   * queue is empty. The priority queue is left unchanged
+   * Returns the element with highest priority, or returns null if the priority. queue is empty. The
+   * priority queue is left unchanged
    */
   public T peek() {
     T root = null;
@@ -47,7 +47,7 @@ public class PriorityQueue<T extends Comparable<T>> implements
    * Adds a new entry to the priority queue according to the priority value.
    *
    * @param newEntry the new element to add to the priority queue
-   * @throws an exception if the priority queue is full
+   * @throws PQException exception if the priority queue is full
    */
   public void add(T newEntry) throws PQException {
     if (size < max_size) {
@@ -69,18 +69,35 @@ public class PriorityQueue<T extends Comparable<T>> implements
 
   /**
    * <p> Implement this method for Question 1 </p>
-   *
+   * <p>
    * Removes the element with highest priority.
    */
   public void remove() {
-    // TODO: Implement this method for Question 1
+    items[0] = items[size - 1];
+    size--;
+    PQRebuild(0);
   }
 
   /**
    * <p> Implement this method for Question 1 </p>
    */
   private void PQRebuild(int root) {
-    // TODO: Implement this method for Question 1
+    int left = 2 * root;
+    int right = 2 * root + 1;
+    if (left < size) {
+      int comparedVal = left;
+      if (right < size) {
+        if (items[left].compareTo(items[right]) < 0) {
+          comparedVal = right;
+        }
+      }
+      if (items[root].compareTo(items[comparedVal]) > 0) {
+        T oldRoot = items[root];
+        items[root] = items[comparedVal];
+        items[comparedVal] = oldRoot;
+        PQRebuild(comparedVal);
+      }
+    }
   }
 
 

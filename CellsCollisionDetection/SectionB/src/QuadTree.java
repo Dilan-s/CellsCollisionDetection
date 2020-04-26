@@ -1,6 +1,6 @@
 /**
- * You must implement the <code>add</code> and <code>queryRegion</code> methods in the
- * region-based QuadTree class given below.
+ * You must implement the <code>add</code> and <code>queryRegion</code> methods in the region-based
+ * QuadTree class given below.
  */
 
 
@@ -33,7 +33,7 @@ public class QuadTree implements QuadTreeInterface {
    * @param elem the 2D-object to add to the tree.
    */
   public void add(Object2D elem) {
-    // TODO: Implement this method for Question 2
+    addHelper(root, elem);
   }
 
   /**
@@ -43,8 +43,33 @@ public class QuadTree implements QuadTreeInterface {
    * @param node the root of the current subtree to visit
    */
   private QuadTreeNode addHelper(QuadTreeNode node, Object2D elem) {
-    // TODO: Implement this method for Question 2
-    return null;
+    if (node.isLeaf()) {
+      if (node.values.size() < nodeCapacity) {
+        node.values.add(node.values.size() + 1, elem);
+        return node;
+      } else {
+        node.subdivide();
+        while (!node.values.isEmpty()) {
+          addHelper(node, node.values.get(1));
+          node.values.remove(1);
+        }
+        return addHelper(node, elem);
+      }
+    } else {
+      if (node.NE.region.covers(elem.getCenter())){
+        return addHelper(node.NE, elem);
+      }
+      if (node.NW.region.covers(elem.getCenter())){
+        return addHelper(node.NE, elem);
+      }
+      if (node.SE.region.covers(elem.getCenter())){
+        return addHelper(node.NE, elem);
+      }
+      if (node.SW.region.covers(elem.getCenter())){
+        return addHelper(node.NE, elem);
+      }
+    }
+    return node;
   }
 
   /**
